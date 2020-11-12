@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekayasa Web : LAWAN COVID</title>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+    
+        <!-- Navigation bar -->
+        <nav class="navigation">
+            <!-- Title -->
+            <div class="title">
+                <span class="name">Lawan<b class="red">Covid</b></span>
+            </div>
+            <!-- Menu List -->
+            <div class="menu">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/">Tentang</a></li>
+                    <li><a href="/">Pencegahan</a></li>
+                    <li><a href="/">Hubungi Kami</a></li>
+                </ul>
+            </div>
+            <!-- Action Button -->
+            <div class="action">
+                <button>Login</button>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <main class="container">
+            <div class="banner">
+                <div class="image">
+                    <img width="80%" src="img/icon_corona.png" alt="Earth"/>
+                </div>
+                <div class="text">
+                    <span class="btn-solid">Cepat Sembuh, Bumiku</span>
+                    <h1>
+                        Mari Membantu Memulihkan Bumi, <br />
+                        <span class="red">Mulai Dari Sekarang!</span>
+                    </h1>
+                    <p>
+                        Isu menyebarnya Virus Corona atau yang disebut Covid-19 membuat Bumi berduka.
+                    </p>
+                    <div>
+                        <button class="fill">
+                            Informasi
+                        </button>
+                        <button class="outline">
+                            Lihat Video
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <h3>Data Kasus Coronavirus di Indonesia</h3>
+            <!-- Data virus corona -->
+            <div class="box-container">
+                <div class="box-info bg-dark-blue">
+                    <p>
+                        Positif
+                    </p>
+                    <span id="total-positif">
+                        Loading
+                    </span>
+                </div>
+                <div class="box-info bg-dark-blue">
+                    <p>
+                        Sembuh
+                    </p>
+                    <span id="total-sembuh">
+                        Loading
+                    </span>
+                </div>
+                <div class="box-info bg-dark-blue">
+                    <p>
+                        Meninggal
+                    </p>
+                    <span id="total-meninggal">
+                        Loading
+                    </span>
+                </div>
+            </div>
+        </main>
+    
+    <!-- Footer -->
+    <footer>
+        Powered by Informatika. Made With ♥ For You
+    </footer>
+
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script>
+
+        // Membuat navigation tetap berada di atas ketika di scroll kebawah
+        $(window).scroll(function() {
+            if($(this).scrollTop() > 40) {
+                $('.navigation').addClass("fixed-top")
+            } else {
+                $('.navigation').removeClass("fixed-top")
+            }
+        })
+
+        // Function untuk menambahkan koma pada angka
+        function tambahKoma(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        }
+
+        // Memanggil API dari api.kawalcorona.com
+        $(function() {
+            var endpoint="https://apicovid19indonesia-v2.vercel.app/api/indonesia"
+            $.ajax({
+                type: "GET",
+                url: endpoint,
+                dataType: "json",
+                success: function (result, status) {
+                    $('#total-positif').html(tambahKoma(result.positif))
+                    $('#total-sembuh').html(tambahKoma(result.sembuh))
+                    $('#total-meninggal').html(tambahKoma(result.meninggal))
+                }
+            })
+        })
+    </script>
+</body>
+</html>
